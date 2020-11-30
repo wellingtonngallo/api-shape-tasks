@@ -5,6 +5,7 @@ export async function up(knex: Knex) {
     table.increments('id').primary();
     table.string('name').notNullable();
     table.string('description').notNullable();
+    table.timestamp('createdDate').defaultTo(knex.raw('CURRENT_TIMESTAMP')).notNullable();
   });
 }
 

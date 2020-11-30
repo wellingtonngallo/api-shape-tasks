@@ -23,7 +23,9 @@ export default class TasksController {
         board_id
       });
     
-      return response.status(201).send();
+      return response.status(201).json({
+        success: 'Registro salvo'
+      });
     } catch(error) {
       return response.status(400).json({
         error: 'Unexpected error while creating new task'
@@ -46,7 +48,9 @@ export default class TasksController {
         board_id,
       });
     
-      return response.status(201).send();
+      return response.status(201).json({
+        success: 'Registro atualizado'
+      });
 
     } catch(error) {
       return response.status(400).json({
@@ -61,7 +65,9 @@ export default class TasksController {
     try {
       await db('tasks').where('tasks.id', '=', task_id).delete();
     
-      return response.status(201).send();
+      return response.status(201).json({
+        success: 'Registro deletado'
+      });
 
     } catch(error) {
       return response.status(400).json({

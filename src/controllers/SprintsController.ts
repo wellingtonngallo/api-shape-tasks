@@ -2,10 +2,16 @@ import { Request, Response } from 'express';
 import db from "../database/connection";
 
 export default class SprintsController {
-  async index(request: Request, response: Response) {
-    const boards = await db('sprints');
+  async findById(request: Request, response: Response) {
+    const sprints = await db('sprints').where('sprints.id', '=', request.params.sprintId);
 
-    return response.json(boards);
+    return response.json(sprints[0]);
+  }
+
+  async index(request: Request, response: Response) {
+    const sprints = await db('sprints');
+
+    return response.json(sprints);
   }
 
   async createSprint(request: Request, response: Response) {
@@ -20,7 +26,9 @@ export default class SprintsController {
         description
       });
     
-      return response.status(201).send();
+      return response.status(201).json({
+        success: 'Registro salvo'
+      });
     } catch(error) {
       return response.status(400).json({
         error: 'Unexpected error while creating new sprint'
@@ -41,7 +49,9 @@ export default class SprintsController {
         description,
       });
     
-      return response.status(201).send();
+      return response.status(201).json({
+        success: 'Registro atualizado'
+      });
     } catch(error) {
       return response.status(400).json({
         error: 'Unexpected error while update sprint'
@@ -55,7 +65,9 @@ export default class SprintsController {
     try {
       await db('sprints').where('sprints.id', '=', sprint_id).delete();
     
-      return response.status(201).send();
+      return response.status(201).json({
+        success: 'Registro deletado'
+      });
 
     } catch(error) {
       return response.status(400).json({

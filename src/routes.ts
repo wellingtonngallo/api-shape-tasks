@@ -10,6 +10,7 @@ const boardController = new BoardsController();
 const taskController = new TasksController();
 
 routes.get('/sprints', sprintsController.index);
+routes.get('/sprints/:sprintId', sprintsController.findById);
 routes.post('/sprints', sprintsController.createSprint);
 routes.put('/sprints/:sprintId', sprintsController.updateSprint);
 routes.delete('/sprints/:sprintId', sprintsController.deleteSprint);
